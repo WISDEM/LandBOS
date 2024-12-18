@@ -1,8 +1,6 @@
 import os
 from datetime import datetime
 
-import pandas as pd
-
 from landbosse.excelio import XlsxSerialManagerRunner
 from landbosse.excelio import XlsxParallelManagerRunner
 from landbosse.excelio import XlsxGenerator
@@ -12,7 +10,8 @@ from landbosse.excelio import CsvGenerator
 # LandBOSSE, small utility functions
 from landbosse.excelio import XlsxFileOperations
 
-if __name__ == '__main__':
+
+def main():
     # Print start timestamp
     print(f'>>>>>>>> Begin run {datetime.now()} <<<<<<<<<<')
 
@@ -39,7 +38,9 @@ if __name__ == '__main__':
     # option. The first three elements of the returned tuple aren't necessary
     # to determine if the scaling study is enabled.
     # Switch to either validation or non validation producing code.
-    input_path, output_path, validation_enabled, enable_scaling_study = file_ops.get_input_output_paths_from_argv_or_env()
+    input_path, output_path, validation_enabled, enable_scaling_study = (
+        file_ops.get_input_output_paths_from_argv_or_env()
+    )
 
     # final_result aggregates all the results from all the projects.
     final_result = manager_runner.run_from_project_list_xlsx(projects_xlsx, enable_scaling_study)
@@ -63,7 +64,7 @@ if __name__ == '__main__':
         validation_was_successful = validator.compare_expected_to_actual(
             expected_xlsx=expected_validation_data_path,
             actual_module_type_operation_list=final_result['module_type_operation_list'],
-            validation_output_xlsx=validation_result_path
+            validation_output_xlsx=validation_result_path,
         )
         if validation_was_successful:
             print('Validation passed.')
@@ -104,5 +105,7 @@ if __name__ == '__main__':
 
     if validation_enabled:
         exit(build_status)
-    else:
-        exit(0)
+
+
+if __name__ == '__main__':
+    main()

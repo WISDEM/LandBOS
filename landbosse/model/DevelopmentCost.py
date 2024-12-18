@@ -73,7 +73,7 @@ class DevelopmentCost(CostModule):
                 'type': 'dataframe',
                 'variable_df_key_col_name': 'Type of Cost - Phase of Construction - Cost in USD',
                 'value': dashed_row,
-                'last_number': row[2]
+                'last_number': row.iloc[2]
             })
 
         for _dict in result:
@@ -103,5 +103,3 @@ class DevelopmentCost(CostModule):
             traceback.print_exc()
             print(f"Fail {self.project_name} DevelopmentCost")
             return 1, error  # module did not run successfully
-
-
